@@ -547,109 +547,10 @@ footer{
         bottom:15px;
     }
 }
-
-/* LOGIN */
-
-#login-overlay{
-    position:fixed;
-    inset:0;
-    z-index:5000;
-    background:#050505;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-#login-box{
-    width:100%;
-    max-width:360px;
-    background:linear-gradient(160deg,#161616,#0a0a0a);
-    border:1px solid #2c2c2c;
-    border-radius:20px;
-    padding:30px 26px;
-    box-shadow:0 20px 60px rgba(0,0,0,.5);
-}
-
-#login-box h2{
-    color:#fff;
-    font-size:20px;
-    margin-bottom:6px;
-    text-align:center;
-}
-
-#login-box p{
-    color:#888;
-    font-size:13px;
-    text-align:center;
-    margin-bottom:22px;
-}
-
-#login-box input{
-    width:100%;
-    padding:13px 14px;
-    margin-bottom:12px;
-    border-radius:12px;
-    border:1px solid #2c2c2c;
-    background:#111;
-    color:#fff;
-    font-size:14px;
-    outline:none;
-}
-
-#login-box input:focus{
-    border-color:#16d16b;
-}
-
-#login-btn{
-    width:100%;
-    padding:13px;
-    border-radius:30px;
-    border:none;
-    background:#16d16b;
-    color:#04130a;
-    font-weight:800;
-    font-size:14.5px;
-    cursor:pointer;
-    margin-top:6px;
-}
-
-#login-btn:hover{
-    background:#22e37c;
-}
-
-#login-error{
-    color:#ff4d4d;
-    font-size:13px;
-    text-align:center;
-    margin-top:14px;
-    display:none;
-    line-height:1.5;
-}
-
-#login-box.locked input,
-#login-box.locked #login-btn{
-    opacity:.4;
-    pointer-events:none;
-}
 </style>
 </head>
 
 <body>
-
-<!-- TELA DE LOGIN -->
-<div id="login-overlay">
-  <div id="login-box">
-    <h2>XSTV</h2>
-    <p>Acesso restrito — faça login para continuar</p>
-    <input type="text" id="login-user" placeholder="Nome" autocomplete="off">
-    <input type="password" id="login-pass" placeholder="Senha">
-    <button id="login-btn" onclick="tentarLogin()">Entrar</button>
-    <div id="login-error"></div>
-  </div>
-</div>
-
-<div id="site-content" style="display:none;">
 
 <header>
 
@@ -1007,6 +908,196 @@ Instalar
 
 
 <!-- HTV MOD -->
+<style>
+  /* Reset de estilos básicos para consistência */
+  .app-card * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .app-card {
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 24px 24px 20px;
+    max-width: 440px;
+    width: 100%;
+    margin: 16px auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .app-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.10);
+  }
+
+  /* Topo: ícone + info */
+  .app-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .app-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .app-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .app-icon .fallback {
+    font-size: 32px;
+    line-height: 1;
+    color: #888;
+    display: none;
+  }
+
+  .app-icon.broken img {
+    display: none;
+  }
+  .app-icon.broken .fallback {
+    display: block;
+  }
+
+  .app-top-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .app-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e1e2a;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  .app-dev {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+
+  .app-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #4b5563;
+  }
+
+  .stars {
+    color: #fbbf24;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+  }
+
+  .app-meta span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .app-meta span:not(.stars) {
+    color: #9ca3af;
+  }
+
+  /* Descrição */
+  .app-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #374151;
+    background: #f9fafb;
+    padding: 14px 16px;
+    border-radius: 14px;
+    margin: 4px 0 18px 0;
+    border-left: 4px solid #3b82f6;
+  }
+
+  /* Botões */
+  .buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #f3f4f6;
+    color: #1f2937;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+
+  .button.download {
+    background: #1e293b;
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.25);
+  }
+
+  .button.download:hover {
+    background: #0f172a;
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(30, 41, 59, 0.35);
+  }
+
+  .button.download:active {
+    transform: scale(0.97);
+  }
+
+  /* Ajuste para telas pequenas */
+  @media (max-width: 480px) {
+    .app-card {
+      padding: 18px 16px 16px;
+      border-radius: 16px;
+    }
+    .app-icon {
+      width: 56px;
+      height: 56px;
+    }
+    .app-name {
+      font-size: 18px;
+    }
+    .app-description {
+      font-size: 14px;
+      padding: 12px 14px;
+    }
+    .button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
+</style>
 
 <article class="app-card">
   <div class="app-top">
@@ -1175,174 +1266,204 @@ aria-label="Falar com XSTV no WhatsApp">
 
 <div class="modal-header">
 
-<div class="app-icon" id="modal-icon">
-<img id="modal-icon-img" src="" alt="" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+<div class="app-icon" id="modalIcon">
+
+<img
+id="modalImg"
+src=""
+alt=""
+onerror="this.parentElement.classList.add('broken')">
+
 <div class="fallback">📺</div>
+
 </div>
+
 
 <div>
-<h3 id="modal-title"></h3>
-<p>Siga os passos para instalar</p>
+
+<h3 id="modalName">
+App
+</h3>
+
+<p>
+Antes de baixar, siga os passos:
+</p>
+
 </div>
 
 </div>
+
 
 <div class="steps">
 
-<div class="step">
-<div class="step-num">1</div>
-<div class="step-text"><strong>Toque em "Baixar APK"</strong> para abrir o link de download no MediaFire.</div>
-</div>
+
+<!-- PASSO 1 -->
 
 <div class="step">
-<div class="step-num">2</div>
-<div class="step-text"><strong>Permita instalação de fontes desconhecidas</strong> nas configurações do seu Android, se solicitado.</div>
+
+<div class="step-num">
+1
 </div>
+
+<div class="step-text">
+
+Toque em <strong>"Baixar agora"</strong>
+abaixo. O arquivo <strong>.apk</strong>
+vai começar a baixar no MediaFire.
+
+</div>
+
+</div>
+
+
+
+<!-- PASSO 2 -->
 
 <div class="step">
-<div class="step-num">3</div>
-<div class="step-text"><strong>Abra o arquivo baixado</strong> e toque em instalar.</div>
+
+<div class="step-num">
+2
 </div>
+
+<div class="step-text">
+
+Quando o download terminar,
+abra o arquivo baixado
+(na barra de notificações ou na pasta
+<strong>Downloads</strong>).
 
 </div>
 
-<div class="modal-note" id="modal-note" style="display:none;">
-<strong>Observação:</strong> <span id="modal-note-text"></span>
 </div>
+
+
+
+<!-- PASSO 3 -->
+
+<div class="step">
+
+<div class="step-num">
+3
+</div>
+
+<div class="step-text">
+
+Se aparecer um aviso de segurança,
+leia a mensagem com atenção e
+verifique a origem do arquivo antes
+de decidir se deseja instalar.
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div
+class="modal-note"
+id="modalNote"
+style="display:none;">
+</div>
+
 
 <div class="modal-buttons">
-<button class="button cancel" onclick="fecharModal()">Cancelar</button>
-<a class="button download" id="modal-download" href="#" target="_blank" rel="noopener">Baixar APK</a>
+
+<button
+class="button cancel"
+onclick="fecharInstrucoes()">
+Cancelar
+</button>
+
+
+<a
+class="button download"
+id="modalLink"
+href="#"
+target="_blank"
+rel="noopener noreferrer"
+onclick="fecharInstrucoes()">
+Baixar agora
+</a>
+
 </div>
+
 
 </div>
 
 </div>
 
-</div>
-<!-- fim #site-content -->
+
 
 <script>
-document.getElementById('ano').textContent = new Date().getFullYear();
 
-function abrirInstrucoes(nome, icone, link, nota){
-    document.getElementById('modal-title').textContent = nome;
-    document.getElementById('modal-icon-img').src = icone;
-    document.getElementById('modal-icon-img').alt = nome;
-    document.getElementById('modal-icon').classList.remove('broken');
-    document.getElementById('modal-download').href = link;
+document.getElementById("ano").textContent =
+new Date().getFullYear();
 
-    var notaBox = document.getElementById('modal-note');
-    var notaTexto = document.getElementById('modal-note-text');
 
-    if(nota && nota.trim() !== ''){
-        notaTexto.textContent = nota;
-        notaBox.style.display = 'block';
-    } else {
-        notaBox.style.display = 'none';
-    }
+function abrirInstrucoes(nome,icone,link,nota){
 
-    document.getElementById('modal').classList.add('open');
+document.getElementById("modalName").textContent =
+nome;
+
+document.getElementById("modalImg").src =
+icone;
+
+document.getElementById("modalIcon")
+.classList.remove("broken");
+
+document.getElementById("modalLink").href =
+link;
+
+
+const modalNote =
+document.getElementById("modalNote");
+
+
+if(nota){
+
+modalNote.innerHTML =
+"<strong>Observação:</strong> " + nota;
+
+modalNote.style.display =
+"block";
+
+}else{
+
+modalNote.innerHTML = "";
+
+modalNote.style.display =
+"none";
+
 }
 
-function fecharModal(){
-    document.getElementById('modal').classList.remove('open');
+
+document.getElementById("modal")
+.classList.add("open");
+
 }
-</script>
 
-<!-- LOGIN -->
-<script>
-(function(){
-    // Memória de reserva, usada quando localStorage/sessionStorage
-    // não estiverem disponíveis (ex: Spck Editor, abrir via file://, modo privado).
-    var memoria = { tentativas: 0, bloqueado: false, logado: false };
 
-    function storageOk(store){
-        try{
-            store.setItem('__xstv_teste__','1');
-            store.removeItem('__xstv_teste__');
-            return true;
-        }catch(e){
-            return false;
-        }
-    }
+function fecharInstrucoes(){
 
-    var temLocal = (typeof localStorage !== 'undefined') && storageOk(localStorage);
-    var temSession = (typeof sessionStorage !== 'undefined') && storageOk(sessionStorage);
+document.getElementById("modal")
+.classList.remove("open");
 
-    function getTentativas(){
-        if(temLocal) return parseInt(localStorage.getItem('xstv_tentativas') || '0', 10);
-        return memoria.tentativas;
-    }
+}
 
-    function setTentativas(v){
-        if(temLocal) localStorage.setItem('xstv_tentativas', v);
-        memoria.tentativas = v;
-    }
 
-    function getBloqueado(){
-        if(temLocal) return localStorage.getItem('xstv_bloqueado') === '1';
-        return memoria.bloqueado;
-    }
+document.getElementById("modal")
+.addEventListener("click",function(e){
 
-    function setBloqueado(v){
-        if(temLocal) localStorage.setItem('xstv_bloqueado', v ? '1' : '0');
-        memoria.bloqueado = v;
-    }
+if(e.target === this){
 
-    function getLogado(){
-        if(temSession) return sessionStorage.getItem('xstv_logado') === '1';
-        return memoria.logado;
-    }
+fecharInstrucoes();
 
-    function setLogado(v){
-        if(temSession) sessionStorage.setItem('xstv_logado', v ? '1' : '0');
-        memoria.logado = v;
-    }
+}
 
-    var MAX_TENTATIVAS = 5;
-    var tentativas = getTentativas();
-    var bloqueado = getBloqueado();
-    var box = document.getElementById('login-box');
-    var erro = document.getElementById('login-error');
+});
 
-    if(getLogado() && !bloqueado) liberarSite();
-    if(bloqueado) mostrarBloqueio();
-
-    function liberarSite(){
-        document.getElementById('login-overlay').style.display = 'none';
-        document.getElementById('site-content').style.display = 'block';
-    }
-
-    function mostrarBloqueio(){
-        box.classList.add('locked');
-        erro.style.display = 'block';
-        erro.innerHTML = 'Muitas tentativas incorretas.<br>Entre em contato com o dono do site.';
-    }
-
-    window.tentarLogin = function(){
-        if(bloqueado) return;
-        var nome = document.getElementById('login-user').value.trim().toLowerCase();
-        var senha = document.getElementById('login-pass').value.trim().toLowerCase();
-
-        if(nome === 'xstv' && senha === 'xstv'){
-            setLogado(true);
-            setTentativas(0);
-            liberarSite();
-        } else {
-            tentativas++;
-            setTentativas(tentativas);
-            if(tentativas >= MAX_TENTATIVAS){
-                setBloqueado(true);
-                bloqueado = true;
-                mostrarBloqueio();
-            } else {
-                erro.style.display = 'block';
-                erro.textContent = 'Nome ou senha incorretos. Tentativa ' + tentativas + ' de ' + MAX_TENTATIVAS + '.';
-            }
-        }
-    };
-})();
 </script>
 
 </body>
