@@ -577,13 +577,12 @@ XSTV • Apps & MODs
 </div>
 
 <h1>
-Seus apps.<br>
-<span>Em um só lugar.</span>
+    Aqui estão os melhores aplicativos<br>
+<span>que estão funcionando atualmente.</span>
 </h1>
 
 <p>
-Encontre seus aplicativos favoritos em um só lugar.
-Toque em instalar e siga o passo a passo pra concluir rapidinho.
+Descubra os melhores aplicativos em um só lugar e instale-os com facilidade. Siga os passos simples e esteja pronto para usar seus aplicativos favoritos em minutos.
 </p>
 
 </section>
@@ -595,7 +594,7 @@ Toque em instalar e siga o passo a passo pra concluir rapidinho.
 
 <h2>Aplicativos</h2>
 
-<span>8 corno disponíveis</span>
+<span>6 disponíveis</span>
 
 </div>
 
@@ -909,73 +908,238 @@ Instalar
 
 
 <!-- HTV MOD -->
+<style>
+  /* Reset de estilos básicos para consistência */
+  .app-card * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .app-card {
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 24px 24px 20px;
+    max-width: 440px;
+    width: 100%;
+    margin: 16px auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .app-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.10);
+  }
+
+  /* Topo: ícone + info */
+  .app-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .app-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .app-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .app-icon .fallback {
+    font-size: 32px;
+    line-height: 1;
+    color: #888;
+    display: none;
+  }
+
+  .app-icon.broken img {
+    display: none;
+  }
+  .app-icon.broken .fallback {
+    display: block;
+  }
+
+  .app-top-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .app-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e1e2a;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  .app-dev {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+
+  .app-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #4b5563;
+  }
+
+  .stars {
+    color: #fbbf24;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+  }
+
+  .app-meta span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .app-meta span:not(.stars) {
+    color: #9ca3af;
+  }
+
+  /* Descrição */
+  .app-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #374151;
+    background: #f9fafb;
+    padding: 14px 16px;
+    border-radius: 14px;
+    margin: 4px 0 18px 0;
+    border-left: 4px solid #3b82f6;
+  }
+
+  /* Botões */
+  .buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #f3f4f6;
+    color: #1f2937;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+
+  .button.download {
+    background: #1e293b;
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.25);
+  }
+
+  .button.download:hover {
+    background: #0f172a;
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(30, 41, 59, 0.35);
+  }
+
+  .button.download:active {
+    transform: scale(0.97);
+  }
+
+  /* Ajuste para telas pequenas */
+  @media (max-width: 480px) {
+    .app-card {
+      padding: 18px 16px 16px;
+      border-radius: 16px;
+    }
+    .app-icon {
+      width: 56px;
+      height: 56px;
+    }
+    .app-name {
+      font-size: 18px;
+    }
+    .app-description {
+      font-size: 14px;
+      padding: 12px 14px;
+    }
+    .button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
+</style>
 
 <article class="app-card">
+  <div class="app-top">
+    <div class="app-icon">
+      <img
+        src="https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg"
+        alt="HTV MOD"
+        referrerpolicy="no-referrer"
+        onerror="this.parentElement.classList.add('broken')"
+      >
+      <div class="fallback">📺</div>
+    </div>
+    <div class="app-top-info">
+      <div class="app-name">HTV MOD</div>
+      <div class="app-dev">XSTV Apps</div>
+      <div class="app-meta">
+        <span class="stars">★★★★☆</span>
+        <span>4.3</span>
+        <span>•</span>
+        <span>APK</span>
+      </div>
+    </div>
+  </div>
 
-<div class="app-top">
+  <div class="app-description">
+    Canais ao vivo e filmes direto no seu celular.
+    Instalação rápida via MediaFire.
+  </div>
 
-<div class="app-icon">
-
-<img
-src="https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg"
-alt="HTV MOD"
-referrerpolicy="no-referrer"
-onerror="this.parentElement.classList.add('broken')">
-
-<div class="fallback">📺</div>
-
-</div>
-
-<div class="app-top-info">
-
-<div class="app-name">
-HTV MOD
-</div>
-
-<div class="app-dev">
-XSTV Apps
-</div>
-
-<div class="app-meta">
-
-<span class="stars">
-★★★★☆
-</span>
-
-<span>4.3</span>
-<span>•</span>
-<span>APK</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="app-description">
-Canais ao vivo e filmes direto no seu celular.
-Instalação rápida via MediaFire.
-
-  
-</div>
-
-
-<div class="buttons">
-
-<button
-class="button download"
-onclick="abrirInstrucoes(
-'HTV MOD',
-'https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg',
-'https://www.mediafire.com/file/6s1i6f842q3rhzv/HTV_mod.apk/file',
-''
-)">
-Instalar
-</button>
-
-</div>
-
+  <div class="buttons">
+    <button
+      class="button download"
+      onclick="abrirInstrucoes(
+        'Jaguar TV',
+        'https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg',
+        'https://www.mediafire.com/file/6s1i6f842q3rhzv/HTV_mod.apk/file',
+        ''
+      )"
+    >
+      Instalar
+    </button>
+  </div>
 </article>
 
 
