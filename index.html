@@ -1,1470 +1,353 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050505">
-<title>XSTV - Apps</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-    background:#050505;
-    background-image:
-        radial-gradient(circle at 15% 0%,rgba(120,120,255,.08),transparent 40%),
-        radial-gradient(circle at 85% 20%,rgba(0,255,170,.06),transparent 40%);
-    color:#fff;
-    min-height:100vh;
-}
-
-/* HEADER */
-
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    height:70px;
-    background:rgba(5,5,5,.92);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid #242424;
-}
-
-.header-content{
-    width:92%;
-    max-width:1100px;
-    height:100%;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    text-decoration:none;
-    color:#fff;
-}
-
-.logo{
-    width:42px;
-    height:42px;
-    border-radius:13px;
-    background:linear-gradient(145deg,#444,#080808);
-    border:1px solid #3b3b3b;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:19px;
-    font-weight:bold;
-    box-shadow:0 0 18px rgba(255,255,255,.08);
-}
-
-.logo-name{
-    font-size:21px;
-    font-weight:800;
-    letter-spacing:.5px;
-}
-
-.menu-button{
-    padding:10px 17px;
-    border:1px solid #292929;
-    border-radius:30px;
-    color:#ddd;
-    text-decoration:none;
-    font-size:14px;
-    transition:.25s;
-}
-
-.menu-button:hover{
-    background:#fff;
-    color:#000;
-}
-
-/* HERO */
-
-.hero{
-    width:92%;
-    max-width:1100px;
-    margin:auto;
-    padding:75px 0 45px;
-}
-
-.badge{
-    display:inline-block;
-    padding:8px 13px;
-    border-radius:30px;
-    border:1px solid #303030;
-    background:#0c0c0c;
-    color:#bdbdbd;
-    font-size:11px;
-    font-weight:bold;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.hero h1{
-    margin-top:20px;
-    font-size:clamp(42px,8vw,76px);
-    line-height:.95;
-    letter-spacing:-3px;
-}
-
-.hero h1 span{
-    background:linear-gradient(90deg,#fff,#8a8a8a);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-}
-
-.hero p{
-    margin-top:20px;
-    max-width:650px;
-    color:#a4a4a4;
-    font-size:16px;
-    line-height:1.7;
-}
-
-/* APPS */
-
-.apps-section{
-    width:92%;
-    max-width:1100px;
-    margin:auto;
-    padding-bottom:70px;
-}
-
-.section-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:20px;
-}
-
-.section-header h2{
-    font-size:26px;
-}
-
-.section-header span{
-    color:#777;
-    font-size:13px;
-}
-
-.apps-grid{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:22px;
-}
-
-/* CARD */
-
-.app-card{
-    background:linear-gradient(145deg,#131313,#090909);
-    border:1px solid #282828;
-    border-radius:24px;
-    padding:18px;
-    box-shadow:0 20px 60px rgba(0,0,0,.4);
-    transition:.25s;
-}
-
-.app-card:hover{
-    transform:translateY(-6px);
-    border-color:#4a4a4a;
-    box-shadow:0 25px 70px rgba(0,0,0,.7);
-}
-
-.app-top{
-    display:flex;
-    gap:14px;
-    align-items:center;
-}
-
-.app-icon{
-    width:64px;
-    height:64px;
-    flex-shrink:0;
-    border-radius:16px;
-    overflow:hidden;
-    background:linear-gradient(145deg,#1c1c1c,#0a0a0a);
-    border:1px solid #292929;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.app-icon img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.app-icon.broken img{
-    display:none;
-}
-
-.app-icon .fallback{
-    display:none;
-    font-size:24px;
-}
-
-.app-icon.broken .fallback{
-    display:flex;
-}
-
-.app-top-info{
-    flex:1;
-    min-width:0;
-}
-
-.app-name{
-    font-size:18px;
-    font-weight:800;
-    line-height:1.2;
-}
-
-.app-dev{
-    color:#8a8a8a;
-    font-size:12.5px;
-    margin-top:3px;
-}
-
-.app-meta{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-top:8px;
-    font-size:12px;
-    color:#b6b6b6;
-}
-
-.app-meta .stars{
-    color:#ffcf4d;
-    letter-spacing:1px;
-}
-
-.app-description{
-    color:#999;
-    font-size:13.5px;
-    line-height:1.5;
-    margin-top:14px;
-}
-
-.app-note{
-    margin-top:12px;
-    padding:10px 12px;
-    border-radius:12px;
-    background:#101010;
-    border:1px solid #292929;
-    color:#bdbdbd;
-    font-size:12.5px;
-    line-height:1.45;
-}
-
-.app-note strong{
-    color:#fff;
-}
-
-/* BUTTON */
-
-.buttons{
-    display:flex;
-    gap:10px;
-    margin-top:16px;
-}
-
-.button{
-    flex:1;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:12px;
-    border-radius:30px;
-    border:1px solid #303030;
-    background:#191919;
-    color:white;
-    font-size:14px;
-    font-weight:bold;
-    text-decoration:none;
-    transition:.2s;
-    cursor:pointer;
-}
-
-.button:hover{
-    background:#292929;
-}
-
-.button.download{
-    background:#16d16b;
-    color:#04130a;
-    border-color:#16d16b;
-}
-
-.button.download:hover{
-    background:#22e37c;
-}
-
-/* MODAL */
-
-.modal-overlay{
-    position:fixed;
-    inset:0;
-    z-index:3000;
-    background:rgba(0,0,0,.75);
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    backdrop-filter:blur(4px);
-}
-
-.modal-overlay.open{
-    display:flex;
-}
-
-.modal-box{
-    width:100%;
-    max-width:460px;
-    background:linear-gradient(160deg,#161616,#0a0a0a);
-    border:1px solid #2c2c2c;
-    border-radius:24px 24px 0 0;
-    padding:26px 22px 30px;
-    animation:slideUp .3s ease;
-}
-
-@media(min-width:480px){
-    .modal-overlay{
-        align-items:center;
-    }
-
-    .modal-box{
-        border-radius:24px;
-    }
-}
-
-@keyframes slideUp{
-    from{
-        transform:translateY(40px);
-        opacity:0;
-    }
-
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-.modal-header{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:18px;
-}
-
-.modal-header .app-icon{
-    width:46px;
-    height:46px;
-    border-radius:12px;
-}
-
-.modal-header h3{
-    font-size:17px;
-}
-
-.modal-header p{
-    font-size:12px;
-    color:#888;
-    margin-top:2px;
-}
-
-.steps{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    margin-bottom:22px;
-}
-
-.step{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-}
-
-.step-num{
-    width:26px;
-    height:26px;
-    border-radius:50%;
-    background:#16d16b;
-    color:#04130a;
-    font-weight:800;
-    font-size:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-}
-
-.step-text{
-    font-size:13.5px;
-    color:#cfcfcf;
-    line-height:1.5;
-}
-
-.step-text strong{
-    color:#fff;
-}
-
-.modal-note{
-    margin:0 0 20px;
-    padding:12px 14px;
-    border-radius:14px;
-    background:#111;
-    border:1px solid #333;
-    color:#cfcfcf;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.modal-note strong{
-    color:#fff;
-}
-
-.modal-buttons{
-    display:flex;
-    gap:10px;
-}
-
-.modal-buttons .button{
-    padding:14px;
-    font-size:14.5px;
-}
-
-.modal-buttons .cancel{
-    background:transparent;
-    border:1px solid #333;
-    color:#aaa;
-    flex:0 0 auto;
-    padding:14px 20px;
-}
-
-/* FOOTER */
-
-footer{
-    border-top:1px solid #222;
-    padding:35px 0 45px;
-    color:#777;
-    font-size:13px;
-}
-
-.footer-content{
-    width:92%;
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-}
-
-.footer-content strong{
-    color:white;
-}
-
-/* WHATSAPP */
-
-.whatsapp{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    background:#20d66b;
-    color:#04130a;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-    font-weight:bold;
-    text-decoration:none;
-    border:3px solid #07140c;
-    box-shadow:0 12px 35px rgba(32,214,107,.3);
-    z-index:2000;
-    transition:.25s;
-}
-
-.whatsapp:hover{
-    transform:scale(1.1);
-    background:#31e779;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-    .header-content{
-        width:94%;
-    }
-
-    .menu-button{
-        display:none;
-    }
-
-    .hero{
-        padding-top:50px;
-    }
-
-    .hero h1{
-        font-size:48px;
-        letter-spacing:-2px;
-    }
-
-    .apps-grid{
-        grid-template-columns:1fr;
-    }
-
-    .app-card{
-        border-radius:21px;
-    }
-
-    .footer-content{
-        flex-direction:column;
-    }
-
-    .whatsapp{
-        width:56px;
-        height:56px;
-        right:15px;
-        bottom:15px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050505">
+    <title>XSTV - Apps, Image Host & Fullscreen Player</title>
+
+    <!-- Fontes e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilo Externo -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-
-<div class="header-content">
-
-<a href="https://xstvstream-media.github.io/" class="logo-area">
-<div class="logo">X</div>
-<div class="logo-name">XSTV</div>
-</a>
-
-<a href="https://xstvstream-media.github.io/" class="menu-button" target="_blank" rel="noopener">
-Visitar Site
-</a>
-
-</div>
-
-</header>
-
-
-<section class="hero">
-
-<div class="badge">
-XSTV • Apps & MODs
-</div>
-
-<h1>
-    Aqui estão os melhores aplicativos<br>
-<span>que estão funcionando atualmente.</span>
-</h1>
-
-<p>
-Descubra os melhores aplicativos em um só lugar e instale-os com facilidade. Siga os passos simples e esteja pronto para usar seus aplicativos favoritos em minutos.
-</p>
-
-</section>
-
-
-<section class="apps-section" id="apps">
-
-<div class="section-header">
-
-<h2>Aplicativos</h2>
-
-<span>6 disponíveis</span>
-
-</div>
-
-
-<div class="apps-grid">
-
-
-<!-- JAGUAR TV -->
-
-<article class="app-card">
-
-<div class="app-top">
-
-<div class="app-icon">
-
-<img
-src="https://i.postimg.cc/Fs29Ct7w/images.jpg"
-alt="Jaguar TV"
-referrerpolicy="no-referrer"
-onerror="this.parentElement.classList.add('broken')">
-
-<div class="fallback">📺</div>
-
-</div>
-
-<div class="app-top-info">
-
-<div class="app-name">
-Jaguar TV
-</div>
-
-<div class="app-dev">
-XSTV Apps
-</div>
-
-<div class="app-meta">
-
-<span class="stars">
-★★★★☆
-</span>
-
-<span>4.3</span>
-<span>•</span>
-<span>APK</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="app-description">
-Canais ao vivo e filmes direto no seu celular.
-Instalação rápida via MediaFire.
-
-Teste de 7 em 7 dias, só criar a conta após o vencimento nesse site aqui
-
-<a href="https://jaguartv.store/auth/register" target="_blank">https://jaguartv.store/auth/register</a>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-class="button download"
-onclick="abrirInstrucoes(
-'Jaguar TV',
-'https://i.postimg.cc/Fs29Ct7w/images.jpg',
-'https://www.mediafire.com/file/kd8j4yhbb66cltp/Jaguar_tv.apk/file',
-''
-)">
-Instalar
-</button>
-
-</div>
-
-</article>
-
-
-
-<!-- BRAS TV -->
-
-<article class="app-card">
-
-<div class="app-top">
-
-<div class="app-icon">
-
-<img
-src="https://i.postimg.cc/Gp9nbq84/bras-tv-logo-png.png"
-alt="BRAS TV"
-referrerpolicy="no-referrer"
-onerror="this.parentElement.classList.add('broken')">
-
-<div class="fallback">📺</div>
-
-</div>
-
-
-<div class="app-top-info">
-
-<div class="app-name">
-BRAS TV
-</div>
-
-<div class="app-dev">
-XSTV Apps
-</div>
-
-<div class="app-meta">
-
-<span class="stars">
-★★★★★
-</span>
-
-<span>4.7</span>
-<span>•</span>
-<span>APK</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="app-description">
-Canais ao vivo e filmes direto no seu celular.
-Instalação rápida disponível no MediaFire. Lembre-se de limpar os dados após 7 dias. Observação: pode não funcionar em todas as versões do Android.
-</div>
-
-
-<div class="buttons">
-
-<button
-class="button download"
-onclick="abrirInstrucoes(
-'BRAS TV',
-'https://i.postimg.cc/Gp9nbq84/bras-tv-logo-png.png',
-'https://www.mediafire.com/file/w9s5rprp8lz4qaj/BRAS_TV.apk/file',
-''
-)">
-Instalar
-</button>
-
-</div>
-
-</article>
-
-
-
-<!-- YOUCINE MOD -->
-
-<article class="app-card">
-
-<div class="app-top">
-
-<div class="app-icon">
-
-<img
-src="https://i.postimg.cc/qBQX93CT/images-(1).jpg"
-alt="Youcine MOD"
-referrerpolicy="no-referrer"
-onerror="this.parentElement.classList.add('broken')">
-
-<div class="fallback">📺</div>
-
-</div>
-
-
-<div class="app-top-info">
-
-<div class="app-name">
-Youcine MOD
-</div>
-
-<div class="app-dev">
-XSTV Apps
-</div>
-
-<div class="app-meta">
-
-<span class="stars">
-★★★★★
-</span>
-
-<span>4.6</span>
-<span>•</span>
-<span>APK</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="app-description">
-Aplicativo Youcine MOD para Android.
-Download disponível via MediaFire.
-</div>
-
-
-<div class="app-note">
-
-<strong>youcine</strong><br>
-
-Se o aviso aparecer no MediaFire, basta descer um pouco e marcar a caixinha para fazer o download. Depois que expirar após 3 dias youcine mod, limpe os dados.
-
-
-</div>
-
-
-<div class="buttons">
-
-<button
-class="button download"
-onclick="abrirInstrucoes(
-'Youcine MOD',
-'https://i.postimg.cc/qBQX93CT/images-(1).jpg',
-'https://www.mediafire.com/file/k2jikvb9com6tic/youcine_mod.apk/file',
-'Depois que expirar após 3 dias youcine mod, limpe os dados do app.'
-)">
-Instalar
-</button>
-
-</div>
-
-</article>
-
-
-
-<!-- VEXOTV -->
-
-<article class="app-card">
-
-<div class="app-top">
-
-<div class="app-icon">
-
-<img
-src="https://i.postimg.cc/ZqFypG8h/unnamed.png"
-alt="VexoTV"
-referrerpolicy="no-referrer"
-onerror="this.parentElement.classList.add('broken')">
-
-<div class="fallback">📺</div>
-
-</div>
-
-
-<div class="app-top-info">
-
-<div class="app-name">
-VexoTV
-</div>
-
-<div class="app-dev">
-XSTV Apps
-</div>
-
-<div class="app-meta">
-
-<span class="stars">
-★★★★★
-</span>
-
-<span>4.6</span>
-<span>•</span>
-<span>APK</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="app-description">
-Aplicativo VexoTV para Android.
-Download disponível via MediaFire.
-</div>
-
-
-<div class="app-note">
-
-<strong>Após expirar 3 dias, limpe os dados.</strong>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-class="button download"
-onclick="abrirInstrucoes(
-'VexoTV',
-'https://i.postimg.cc/ZqFypG8h/unnamed.png',
-'https://www.mediafire.com/file/r96bstdf0qbf0uh/vexo_tv.apk/file',
-'Após expirar 3 dias, limpe os dados do aplicativo para tentar utilizá-lo novamente.'
-)">
-Instalar
-</button>
-
-</div>
-
-</article>
-
-
-
-<!-- HTV MOD -->
-<style>
-  /* Reset de estilos básicos para consistência */
-  .app-card * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  .app-card {
-    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-    padding: 24px 24px 20px;
-    max-width: 440px;
-    width: 100%;
-    margin: 16px auto;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .app-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.10);
-  }
-
-  /* Topo: ícone + info */
-  .app-top {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 18px;
-  }
-
-  .app-icon {
-    position: relative;
-    flex-shrink: 0;
-    width: 68px;
-    height: 68px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #f0f2f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  }
-
-  .app-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .app-icon .fallback {
-    font-size: 32px;
-    line-height: 1;
-    color: #888;
-    display: none;
-  }
-
-  .app-icon.broken img {
-    display: none;
-  }
-  .app-icon.broken .fallback {
-    display: block;
-  }
-
-  .app-top-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .app-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1e1e2a;
-    letter-spacing: -0.3px;
-    line-height: 1.2;
-    margin-bottom: 2px;
-  }
-
-  .app-dev {
-    font-size: 14px;
-    font-weight: 500;
-    color: #6b7280;
-    margin-bottom: 4px;
-  }
-
-  .app-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: #4b5563;
-  }
-
-  .stars {
-    color: #fbbf24;
-    letter-spacing: 0.5px;
-    font-size: 14px;
-  }
-
-  .app-meta span {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .app-meta span:not(.stars) {
-    color: #9ca3af;
-  }
-
-  /* Descrição */
-  .app-description {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #374151;
-    background: #f9fafb;
-    padding: 14px 16px;
-    border-radius: 14px;
-    margin: 4px 0 18px 0;
-    border-left: 4px solid #3b82f6;
-  }
-
-  /* Botões */
-  .buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 4px;
-  }
-
-  .button {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 40px;
-    font-size: 16px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: #f3f4f6;
-    color: #1f2937;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-  }
-
-  .button.download {
-    background: #1e293b;
-    color: white;
-    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.25);
-  }
-
-  .button.download:hover {
-    background: #0f172a;
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(30, 41, 59, 0.35);
-  }
-
-  .button.download:active {
-    transform: scale(0.97);
-  }
-
-  /* Ajuste para telas pequenas */
-  @media (max-width: 480px) {
-    .app-card {
-      padding: 18px 16px 16px;
-      border-radius: 16px;
-    }
-    .app-icon {
-      width: 56px;
-      height: 56px;
-    }
-    .app-name {
-      font-size: 18px;
-    }
-    .app-description {
-      font-size: 14px;
-      padding: 12px 14px;
-    }
-    .button {
-      font-size: 14px;
-      padding: 10px 16px;
-    }
-  }
-</style>
-
-<article class="app-card">
-  <div class="app-top">
-    <div class="app-icon">
-      <img
-        src="https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg"
-        alt="HTV MOD"
-        referrerpolicy="no-referrer"
-        onerror="this.parentElement.classList.add('broken')"
-      >
-      <div class="fallback">📺</div>
+<div id="site-wrapper">
+
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo-area" onclick="mostrarAba('apps'); return false;">
+                <div class="logo">X</div>
+                <div class="logo-name">XSTV</div>
+            </a>
+
+            <div class="nav-buttons">
+                <button id="btn-tab-apps" class="menu-button active" onclick="mostrarAba('apps')">Apps</button>
+                <button id="btn-tab-host" class="menu-button" onclick="mostrarAba('dropzone')">Hospedar Imagem</button>
+                <button id="btn-tab-video" class="menu-button" onclick="mostrarAba('video')">Player Fullscreen</button>
+                <button id="btn-tab-encurtador" class="menu-button" onclick="window.location.href='encurtador.html'">Encurtador de Link</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEÇÃO APPS (XSTV) -->
+    <div id="secao-apps">
+        <section class="hero">
+            <div class="badge">XSTV • Apps & MODs</div>
+            <h1>Aqui estão os melhores aplicativos<br><span>que estão funcionando atualmente.</span></h1>
+            <p>Descubra os melhores aplicativos em um só lugar e instale-os com facilidade. Siga os passos simples e esteja pronto para usar seus aplicativos favoritos em minutos.</p>
+        </section>
+
+        <section class="apps-section" id="apps">
+            <div class="section-header">
+                <h2>Aplicativos</h2>
+                <span>7 disponíveis</span>
+            </div>
+
+            <div class="apps-grid">
+                <!-- JAGUAR TV -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/Fs29Ct7w/images.jpg" alt="Jaguar TV" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">Jaguar TV</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★☆</span> <span>4.3</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">
+                        Canais ao vivo e filmes direto no seu celular. Instalação rápida via MediaFire. Teste de 7 em 7 dias, só criar a conta após o vencimento nesse site aqui: <a href="https://jaguartv.store/auth/register" target="_blank" style="color: #16d16b;">jaguartv.store</a>
+                    </div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('Jaguar TV','https://i.postimg.cc/Fs29Ct7w/images.jpg','https://www.mediafire.com/file/kd8j4yhbb66cltp/Jaguar_tv.apk/file','')">Instalar</button>
+                    </div>
+                </article>
+
+                <!-- BRAS TV -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/Gp9nbq84/bras-tv-logo-png.png" alt="BRAS TV" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">BRAS TV</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★★</span> <span>4.7</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">
+                        Canais ao vivo e filmes direto no seu celular. Instalação rápida disponível no MediaFire. Lembre-se de limpar os dados após 7 dias. Observação: pode não funcionar em todas as versões do Android.
+                    </div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('BRAS TV','https://i.postimg.cc/Gp9nbq84/bras-tv-logo-png.png','https://www.mediafire.com/file/w9s5rprp8lz4qaj/BRAS_TV.apk/file','')">Instalar</button>
+                    </div>
+                </article>
+
+                <!-- YOUCINE MOD -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/qBQX93CT/images-(1).jpg" alt="Youcine MOD" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">Youcine MOD</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★★</span> <span>4.6</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">Aplicativo Youcine MOD para Android. Download disponível via MediaFire.</div>
+                    <div class="app-note">
+                        <strong>youcine</strong><br>Se o aviso aparecer no MediaFire, basta descer um pouco e marcar a caixinha para fazer o download. Depois que expirar após 3 dias, limpe os dados.
+                    </div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('Youcine MOD','https://i.postimg.cc/qBQX93CT/images-(1).jpg','https://www.mediafire.com/file/k2jikvb9com6tic/youcine_mod.apk/file','Depois que expirar após 3 dias youcine mod, limpe os dados do app.')">Instalar</button>
+                    </div>
+                </article>
+         
+                <!-- high tv -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/dVRc3GKB/Screenshot-20260910-132316-One-UI-Home.jpg" alt="high tv" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">high tv</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★★</span> <span>4.6</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">Aplicativo high tv para Android. Download disponível via MediaFire.</div>
+                    <div class="app-note"><strong>Após expirar 3 dias, limpe os dados.</strong></div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('high tv','https://i.postimg.cc/dVRc3GKB/Screenshot-20260910-132316-One-UI-Home.jpg','https://www.mediafire.com/file/46lmn7ln7rtn8ys/HighTV.apk/file','Após expirar 3 dias, limpe os dados do aplicativo para tentar utilizá-lo novamente.')">Instalar</button>
+                    </div>
+                </article>
+
+                <!-- VEXOTV -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/ZqFypG8h/unnamed.png" alt="VexoTV" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">VexoTV</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★★</span> <span>4.6</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">Aplicativo VexoTV para Android. Download disponível via MediaFire.</div>
+                    <div class="app-note"><strong>Após expirar 3 dias, limpe os dados.</strong></div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('VexoTV','https://i.postimg.cc/ZqFypG8h/unnamed.png','https://www.mediafire.com/file/r96bstdf0qbf0uh/vexo_tv.apk/file','Após expirar 3 dias, limpe os dados do aplicativo para tentar utilizá-lo novamente.')">Instalar</button>
+                    </div>
+                </article>
+
+                <!-- HTV MOD -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg" alt="HTV MOD" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">HTV MOD</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★☆</span> <span>4.3</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">Canais ao vivo e filmes direto no seu celular. Instalação rápida via MediaFire.</div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('HTV MOD','https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg','https://www.mediafire.com/file/6s1i6f842q3rhzv/HTV_mod.apk/file','')">Instalar</button>
+                    </div>
+                </article>
+
+                <!-- ChatGPT -->
+                <article class="app-card">
+                    <div class="app-top">
+                        <div class="app-icon">
+                            <img src="https://i.postimg.cc/K89tWSKB/images.png" alt="ChatGPT" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('broken')">
+                            <div class="fallback">📺</div>
+                        </div>
+                        <div class="app-top-info">
+                            <div class="app-name">ChatGPT</div>
+                            <div class="app-dev">XSTV Apps</div>
+                            <div class="app-meta"><span class="stars">★★★★★</span> <span>4.6</span>•<span>APK</span></div>
+                        </div>
+                    </div>
+                    <div class="app-description">Aplicativo ChatGPT para Android. Download disponível via MediaFire.</div>
+                    <div class="app-note">
+                        <strong>ChatGPT</strong><br>Acesse o ChatGPT mod premium, faça seu cadastro, espere o código de ativação e aproveite!
+                    </div>
+                    <div class="buttons">
+                        <button class="button download" onclick="abrirInstrucoes('ChatGPT','https://i.postimg.cc/K89tWSKB/images.png','https://www.mediafire.com/file/lzgvob7omm2vgm5/chat_gbt.apk/file','Lembre-se de aproveitar todas as vantagens do ChatGPT Premium!')">Instalar</button>
+                    </div>
+                </article>
+            </div>
+        </section>
     </div>
-    <div class="app-top-info">
-      <div class="app-name">HTV MOD</div>
-      <div class="app-dev">XSTV Apps</div>
-      <div class="app-meta">
-        <span class="stars">★★★★☆</span>
-        <span>4.3</span>
-        <span>•</span>
-        <span>APK</span>
-      </div>
+
+    <!-- SEÇÃO HOSPEDAR IMAGEM -->
+    <div id="secao-dropzone" class="dropzone-section">
+        <div class="dz-header">
+            <div class="dz-brand-title"><i class="fa-solid fa-cloud-arrow-up"></i> DropZone Cloud</div>
+            <p class="dz-brand-subtitle">Hospedagem rápida de imagens com links diretos</p>
+        </div>
+
+        <div class="upload-card" id="dropArea">
+            <div class="upload-icon-wrapper"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <h2 class="upload-title">Arraste suas imagens aqui</h2>
+            <p class="upload-hint">Formatos suportados: PNG, JPG, JPEG, GIF, WEBP</p>
+            
+            <button type="button" class="btn-select" onclick="document.getElementById('fileInput').click()">
+                <i class="fa-solid fa-folder-open"></i> Selecionar Arquivo
+            </button>
+            <input type="file" id="fileInput" accept="image/*" multiple />
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <p style="font-size: 0.8rem; color: var(--text-muted-dz); margin-top: 0.6rem;" id="progressStatus">Enviando...</p>
+            </div>
+        </div>
+
+        <section class="results-section">
+            <div class="dz-section-header"><i class="fa-solid fa-link" style="color: var(--accent-dz);"></i> Links Gerados</div>
+            <div class="grid-uploads" id="galleryGrid"></div>
+        </section>
     </div>
-  </div>
 
-  <div class="app-description">
-    Canais ao vivo e filmes direto no seu celular.
-    Instalação rápida via MediaFire.
-  </div>
+    <!-- SEÇÃO PLAYER FULLSCREEN / VÍDEO DA GALERIA -->
+    <div id="secao-video-generator" class="video-generator-section">
+        <div class="dz-header">
+            <div class="dz-brand-title"><i class="fa-solid fa-play"></i> Player Fullscreen Direct</div>
+            <p class="dz-brand-subtitle">Selecione um vídeo da sua galeria ou cole um link direto</p>
+        </div>
 
-  <div class="buttons">
-    <button
-      class="button download"
-      onclick="abrirInstrucoes(
-        'Jaguar TV',
-        'https://i.postimg.cc/Fz6Qhf5V/images-(3).jpg',
-        'https://www.mediafire.com/file/6s1i6f842q3rhzv/HTV_mod.apk/file',
-        ''
-      )"
-    >
-      Instalar
-    </button>
-  </div>
-</article>
+        <div class="vg-card">
+            <!-- OPÇÃO 1: GALERIA DO DISPOSITIVO -->
+            <div class="video-option-block">
+                <label class="link-label" style="font-size: 0.95rem; color: #16d16b; font-weight: 700;">
+                    <i class="fa-solid fa-photo-film"></i> OPÇÃO 1: ESCOLHER VÍDEO DA GALERIA
+                </label>
+                <p style="font-size: 0.8rem; color: #a4a4a4; margin-top: 4px; margin-bottom: 12px;">
+                    Abra qualquer vídeo salvo no seu celular ou computador direto em tela cheia.
+                </p>
+                
+                <input type="file" id="galleryVideoInput" accept="video/*" style="display: none;" onchange="processarVideoGaleria(this.files)">
+                
+                <button type="button" class="button download" style="width: 100%; border: none; background: #16d16b; color: #04130a;" onclick="document.getElementById('galleryVideoInput').click()">
+                    <i class="fa-solid fa-folder-open" style="margin-right: 8px;"></i> Abrir Vídeo da Galeria
+                </button>
+            </div>
 
+            <div style="text-align: center; margin: 25px 0; color: #555; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                — OU —
+            </div>
 
+            <!-- OPÇÃO 2: LINK DIRETO DO VÍDEO -->
+            <div class="video-option-block">
+                <label class="link-label" style="font-size: 0.95rem; color: #3b82f6; font-weight: 700;">
+                    <i class="fa-solid fa-globe"></i> OPÇÃO 2: LINK DIRETO DA WEB (.MP4, .WEBM, .M3U8)
+                </label>
+                <input type="url" id="videoUrlInput" class="vg-input-field" placeholder="https://exemplo.com/meu-video.mp4">
 
-<!-- ChatGPT -->
+                <button type="button" class="button" style="width: 100%; border: 1px solid #3b82f6; background: #3b82f6; color: #fff;" onclick="gerarUrlVideo()">
+                    <i class="fa-solid fa-play" style="margin-right: 8px;"></i> Reproduzir Link Direto
+                </button>
+            </div>
 
-<article class="app-card">
+            <!-- CAIXA DE RESULTADO -->
+            <div class="vg-result-box" id="vgResultBox">
+                <span class="link-label">URL Direta Gerada:</span>
+                <div class="input-copy-wrapper">
+                    <input type="text" id="generatedVideoUrl" readonly onclick="this.select()">
+                    <button type="button" class="btn-copy" onclick="copyText(event, document.getElementById('generatedVideoUrl').value)">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
 
-<div class="app-top">
+                <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+                    <button type="button" id="btnAbrirAgora" class="button download" style="width: auto; padding: 10px 20px; border: none;" onclick="abrirPlayerComUrl(document.getElementById('generatedVideoUrl').value)">
+                        <i class="fa-solid fa-expand" style="margin-right: 8px;"></i> Assistir em Tela Cheia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="app-icon">
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="footer-content">
+            <div><strong>XSTV</strong> — melhores apps e MODs.</div>
+            <div>© <span id="ano"></span> XSTV</div>
+        </div>
+    </footer>
 
-<img
-src="https://i.postimg.cc/K89tWSKB/images.png"
-alt="ChatGPT"
-referrerpolicy="no-referrer"
-onerror="this.parentElement.classList.add('broken')">
+    <!-- BOTÃO WHATSAPP -->
+    <a class="whatsapp" href="https://wa.me/5571991698042?text=Ol%C3%A1%20XSTV%2C%20quero%20falar%20com%20voc%C3%AA." target="_blank" rel="noopener" aria-label="Falar com XSTV no WhatsApp">☎</a>
 
-<div class="fallback">📺</div>
+    <!-- MODAL DE INSTRUÇÕES DE INSTALAÇÃO -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="app-icon" id="modalIcon">
+                    <img id="modalImg" src="" alt="" onerror="this.parentElement.classList.add('broken')">
+                    <div class="fallback">📺</div>
+                </div>
+                <div>
+                    <h3 id="modalName">App</h3>
+                    <p>Antes de baixar, siga os passos:</p>
+                </div>
+            </div>
 
-</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Toque em <strong>"Baixar agora"</strong> abaixo. O arquivo <strong>.apk</strong> vai começar a baixar no MediaFire.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-text">Quando o download terminar, abra o arquivo baixado.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Se aparecer um aviso de segurança, leia a mensagem com atenção antes de instalar.</div>
+                </div>
+            </div>
 
+            <div class="modal-note" id="modalNote" style="display:none;"></div>
 
-<div class="app-top-info">
-
-<div class="app-name">
-ChatGPT
-</div>
-
-<div class="app-dev">
-XSTV Apps
-</div>
-
-<div class="app-meta">
-
-<span class="stars">
-★★★★★
-</span>
-
-<span>4.6</span>
-<span>•</span>
-<span>APK</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="app-description">
-Aplicativo ChatGPT para Android.
-Download disponível via MediaFire.
-</div>
-
-
-<div class="app-note">
-
-<strong>ChatGPT</strong><br>
-
-Acesse o ChatGPT mod premium, faça seu cadastro, espere o código de ativação e aproveite!
-
-
-</div>
-
-
-<div class="buttons">
-
-<button
-class="button download"
-onclick="abrirInstrucoes(
-'ChatGPT',
-'https://i.postimg.cc/K89tWSKB/images.png',
-'https://www.mediafire.com/file/lzgvob7omm2vgm5/chat_gbt.apk/file',
-'Lembre-se de aproveitar todas as vantagens do ChatGPT Premium!'
-)">
-Instalar
-</button>
-
-</div>
-
-</article>
-
-
-
-</div>
-
-</section>
-
-
-<footer>
-
-<div class="footer-content">
-
-<div>
-<strong>XSTV</strong> — melhores apps e MODs.
-</div>
-
-<div>
-© <span id="ano"></span> XSTV
-</div>
+            <div class="modal-buttons">
+                <button class="button cancel" onclick="fecharInstrucoes()">Cancelar</button>
+                <a class="button download" id="modalLink" href="#" target="_blank" rel="noopener noreferrer" onclick="fecharInstrucoes()">Baixar agora</a>
+            </div>
+        </div>
+    </div>
 
 </div>
 
-</footer>
-
-
-<a
-class="whatsapp"
-href="https://wa.me/5571991698042?text=Ol%C3%A1%20XSTV%2C%20quero%20falar%20com%20voc%C3%AA."
-target="_blank"
-rel="noopener"
-aria-label="Falar com XSTV no WhatsApp">
-☎
-</a>
-
-
-
-<!-- MODAL DE INSTALAÇÃO -->
-
-<div class="modal-overlay" id="modal">
-
-<div class="modal-box">
-
-<div class="modal-header">
-
-<div class="app-icon" id="modalIcon">
-
-<img
-id="modalImg"
-src=""
-alt=""
-onerror="this.parentElement.classList.add('broken')">
-
-<div class="fallback">📺</div>
-
+<!-- PLAYER DE VÍDEO TELA CHEIA -->
+<div id="fullscreen-player-view">
+    <button class="btn-exit-player" onclick="fecharVideoEVoltar()"><i class="fa-solid fa-arrow-left"></i> Voltar ao site</button>
+    <video id="fullVideoElement" controls autoplay playsinline style="width: 100vw; height: 100vh; object-fit: contain; background: #000;">
+        <source id="fullVideoSource" src="" type="video/mp4">
+        Seu navegador não suporta a execução de vídeo.
+    </video>
 </div>
 
-
-<div>
-
-<h3 id="modalName">
-App
-</h3>
-
-<p>
-Antes de baixar, siga os passos:
-</p>
-
-</div>
-
-</div>
-
-
-<div class="steps">
-
-
-<!-- PASSO 1 -->
-
-<div class="step">
-
-<div class="step-num">
-1
-</div>
-
-<div class="step-text">
-
-Toque em <strong>"Baixar agora"</strong>
-abaixo. O arquivo <strong>.apk</strong>
-vai começar a baixar no MediaFire.
-
-</div>
-
-</div>
-
-
-
-<!-- PASSO 2 -->
-
-<div class="step">
-
-<div class="step-num">
-2
-</div>
-
-<div class="step-text">
-
-Quando o download terminar,
-abra o arquivo baixado
-(na barra de notificações ou na pasta
-<strong>Downloads</strong>).
-
-</div>
-
-</div>
-
-
-
-<!-- PASSO 3 -->
-
-<div class="step">
-
-<div class="step-num">
-3
-</div>
-
-<div class="step-text">
-
-Se aparecer um aviso de segurança,
-leia a mensagem com atenção e
-verifique a origem do arquivo antes
-de decidir se deseja instalar.
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<div
-class="modal-note"
-id="modalNote"
-style="display:none;">
-</div>
-
-
-<div class="modal-buttons">
-
-<button
-class="button cancel"
-onclick="fecharInstrucoes()">
-Cancelar
-</button>
-
-
-<a
-class="button download"
-id="modalLink"
-href="#"
-target="_blank"
-rel="noopener noreferrer"
-onclick="fecharInstrucoes()">
-Baixar agora
-</a>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-
-<script>
-
-document.getElementById("ano").textContent =
-new Date().getFullYear();
-
-
-function abrirInstrucoes(nome,icone,link,nota){
-
-document.getElementById("modalName").textContent =
-nome;
-
-document.getElementById("modalImg").src =
-icone;
-
-document.getElementById("modalIcon")
-.classList.remove("broken");
-
-document.getElementById("modalLink").href =
-link;
-
-
-const modalNote =
-document.getElementById("modalNote");
-
-
-if(nota){
-
-modalNote.innerHTML =
-"<strong>Observação:</strong> " + nota;
-
-modalNote.style.display =
-"block";
-
-}else{
-
-modalNote.innerHTML = "";
-
-modalNote.style.display =
-"none";
-
-}
-
-
-document.getElementById("modal")
-.classList.add("open");
-
-}
-
-
-function fecharInstrucoes(){
-
-document.getElementById("modal")
-.classList.remove("open");
-
-}
-
-
-document.getElementById("modal")
-.addEventListener("click",function(e){
-
-if(e.target === this){
-
-fecharInstrucoes();
-
-}
-
-});
-
-</script>
-
+<!-- Script Externo -->
+<script src="script.js"></script>
 </body>
 </html>
