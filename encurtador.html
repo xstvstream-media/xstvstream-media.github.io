@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS | Encurtador de Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #141414;
+            --input-bg: #1e1e1e;
+            --border: #282828;
+            --text-main: #f3f4f6;
+            --text-muted: #8e8e93;
+            --accent: #ffffff;
+            --accent-hover: #e5e5e5;
+            --error: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #redirectScreen {
+            display: none;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        header h1 span {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        input {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #555;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .input-prefix-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .prefix {
+            padding-left: 14px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .input-prefix-container input {
+            border: none;
+            background: transparent;
+            padding-left: 6px;
+        }
+
+        button.btn-primary {
+            width: 100%;
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        button.btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-area {
+            margin-top: 24px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            padding: 14px 16px;
+            border-radius: 10px;
+            gap: 12px;
+        }
+
+        .short-url {
+            color: var(--success);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        .btn-copy {
+            background: transparent;
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .btn-copy:hover {
+            background: var(--success);
+            color: #000;
+        }
+
+        .msg-erro {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .history {
+            margin-top: 36px;
+        }
+
+        .history h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .history-list {
+            list-style: none;
+        }
+
+        .history-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .history-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow: hidden;
+        }
+
+        .history-short {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .history-long {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tela de Redirecionamento -->
+    <div id="redirectScreen">
+        <div class="spinner"></div>
+        <h2 id="redirectMsg" style="font-weight: 500; font-size: 1.1rem;">Redirecionando...</h2>
+    </div>
+
+    <!-- Interface Principal do Usuário -->
+    <div class="container" id="mainContainer">
+        <header>
+            <h1>NEXUS<span>Links</span></h1>
+            <p>Encurtador de links profissional</p>
+        </header>
+
+        <div class="card">
+            <form id="shortenForm">
+                <div class="form-group">
+                    <label for="longUrl">URL Original</label>
+                    <input type="url" id="longUrl" placeholder="https://seu-link-original.com/pagina" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customAlias">Nome Personalizado (Opcional)</label>
+                    <div class="input-prefix-container">
+                        <span class="prefix" id="domainPrefix">.../?l=</span>
+                        <input type="text" id="customAlias" placeholder="meu-nome">
+                    </div>
+                    <div id="errorMsg" class="msg-erro">Este nome personalizado já está em uso ou foi bloqueado!</div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="btnSubmit">Encurtar Link</button>
+            </form>
+
+            <div class="result-area" id="resultArea">
+                <label style="display:block; margin-bottom:8px; font-size:0.8rem; color:var(--text-muted);">SEU LINK ENCURTADO:</label>
+                <div class="result-box">
+                    <a href="#" target="_blank" class="short-url" id="shortUrlDisplay"></a>
+                    <button class="btn-copy" id="copyBtn" onclick="copyLink()">Copiar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="history">
+            <h3>Seus Links Recentes</h3>
+            <ul class="history-list" id="historyList">
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Nenhum link criado ainda por você neste navegador.</p>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const DB_URL = "https://meu-encurtador-e5878-default-rtdb.firebaseio.com";
+        const currentDomain = window.location.origin + window.location.pathname;
+        document.getElementById('domainPrefix').textContent = window.location.hostname + '/?l=';
+
+        // Identificador local do dispositivo do usuário (para registrar quem criou)
+        let localUserId = localStorage.getItem('nexus_user_id');
+        if (!localUserId) {
+            localUserId = 'user_' + Math.random().toString(36).substring(2, 10);
+            localStorage.setItem('nexus_user_id', localUserId);
+        }
+
+        // REDIRECIONAMENTO
+        const urlParams = new URLSearchParams(window.location.search);
+        const aliasParam = urlParams.get('l');
+
+        if (aliasParam) {
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('redirectScreen').style.display = 'block';
+
+            fetch(`${DB_URL}/links/${aliasParam.toLowerCase()}.json`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data && data.originalUrl && !data.blocked) {
+                        // Incrementa cliques se o link for válido
+                        const clicks = (data.clicks || 0) + 1;
+                        fetch(`${DB_URL}/links/${aliasParam.toLowerCase()}/clicks.json`, {
+                            method: 'PUT',
+                            body: JSON.stringify(clicks)
+                        });
+                        window.location.href = data.originalUrl;
+                    } else if (data && data.blocked) {
+                        document.querySelector('.spinner').style.display = 'none';
+                        document.getElementById('redirectMsg').textContent = 'Este link foi suspenso por violar os termos de uso.';
+                    } else {
+                        document.querySelector('.spinner').style.display = 'none';
+                        document.getElementById('redirectMsg').textContent = 'Link não encontrado!';
+                    }
+                })
+                .catch(() => {
+                    document.querySelector('.spinner').style.display = 'none';
+                    document.getElementById('redirectMsg').textContent = 'Erro de conexão com o servidor.';
+                });
+        }
+
+        // ENCURTAR LINK
+        document.getElementById('shortenForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btnSubmit = document.getElementById('btnSubmit');
+            const longUrl = document.getElementById('longUrl').value.trim();
+            let customAlias = document.getElementById('customAlias').value.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '');
+            const errorMsg = document.getElementById('errorMsg');
+
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Encurtando...';
+            errorMsg.style.display = 'none';
+
+            if (!customAlias) {
+                customAlias = Math.random().toString(36).substring(2, 8);
+            }
+
+            try {
+                const checkRes = await fetch(`${DB_URL}/links/${customAlias}.json`);
+                if (checkRes.ok) {
+                    const existing = await checkRes.json();
+                    if (existing && existing.originalUrl) {
+                        errorMsg.style.display = 'block';
+                        btnSubmit.disabled = false;
+                        btnSubmit.textContent = 'Encurtar Link';
+                        return;
+                    }
+                }
+
+                const finalShortUrl = currentDomain + '?l=' + customAlias;
+
+                // Salva informações completas para o Administrador analisar
+                const saveRes = await fetch(`${DB_URL}/links/${customAlias}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        originalUrl: longUrl,
+                        createdAt: Date.now(),
+                        userId: localUserId,
+                        clicks: 0,
+                        blocked: false
+                    })
+                });
+
+                if (!saveRes.ok) {
+                    alert('Erro ao salvar o link.');
+                    return;
+                }
+
+                // Salva localmente para exibir histórico PRIVADO ao usuário
+                saveToLocalHistory(customAlias, longUrl);
+
+                const shortDisplay = document.getElementById('shortUrlDisplay');
+                shortDisplay.textContent = finalShortUrl;
+                shortDisplay.href = finalShortUrl;
+                document.getElementById('resultArea').style.display = 'block';
+
+                document.getElementById('longUrl').value = '';
+                document.getElementById('customAlias').value = '';
+                loadLocalHistory();
+
+            } catch (err) {
+                alert('Erro de conexão ao tentar salvar o link.');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Encurtar Link';
+            }
+        });
+
+        function copyLink() {
+            const shortUrl = document.getElementById('shortUrlDisplay').textContent;
+            navigator.clipboard.writeText(shortUrl).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.textContent = 'Copiado!';
+                setTimeout(() => { copyBtn.textContent = 'Copiar'; }, 2000);
+            });
+        }
+
+        function saveToLocalHistory(alias, originalUrl) {
+            let userLinks = JSON.parse(localStorage.getItem('nexus_my_links') || '[]');
+            userLinks.unshift({ alias, originalUrl });
+            userLinks = userLinks.slice(0, 5); // guarda os 5 últimos
+            localStorage.setItem('nexus_my_links', JSON.stringify(userLinks));
+        }
+
+        function loadLocalHistory() {
+            const historyList = document.getElementById('historyList');
+            const userLinks = JSON.parse(localStorage.getItem('nexus_my_links') || '[]');
+
+            if (userLinks.length === 0) {
+                historyList.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Nenhum link criado ainda por você neste navegador.</p>';
+                return;
+            }
+
+            historyList.innerHTML = '';
+            userLinks.forEach(item => {
+                const fullShort = currentDomain + '?l=' + item.alias;
+                const li = document.createElement('li');
+                li.className = 'history-item';
+                li.innerHTML = `
+                    <div class="history-details">
+                        <a href="${fullShort}" target="_blank" class="history-short">${fullShort}</a>
+                        <span class="history-long">${item.originalUrl}</span>
+                    </div>
+                    <button class="btn-copy" style="border-color: var(--border); color: var(--text-muted);" onclick="navigator.clipboard.writeText('${fullShort}')">Copiar</button>
+                `;
+                historyList.appendChild(li);
+            });
+        }
+
+        loadLocalHistory();
+    </script>
+</body>
+</html>
