@@ -242,3 +242,13 @@ function showToast(btn) {
     }
   }
 }
+// BUSCA DE APLICATIVOS (filtra os cards existentes enquanto o usuário digita)
+function filtrarApps(termo) {
+  termo = (termo || '').toLowerCase().trim();
+  document.querySelectorAll('#apps .app-card').forEach(function(card) {
+    var nome = card.querySelector('.app-name');
+    var desc = card.querySelector('.app-description');
+    var txt = ((nome ? nome.textContent : '') + ' ' + (desc ? desc.textContent : '')).toLowerCase();
+    card.style.display = txt.indexOf(termo) > -1 ? '' : 'none';
+  });
+}

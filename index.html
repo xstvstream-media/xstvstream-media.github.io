@@ -17,6 +17,16 @@
 </head>
 <body>
 
+<!-- Reconhece links encurtados no formato /?l=CODIGO e encaminha ao encurtador -->
+<script>
+(function () {
+    var p = new URLSearchParams(window.location.search).get('l');
+    if (p) {
+        window.location.replace('encurtador.html?l=' + encodeURIComponent(p));
+    }
+})();
+</script>
+
 <div id="site-wrapper">
 
     <!-- CABEÇALHO -->
@@ -38,6 +48,14 @@
 
     <!-- SEÇÃO APPS (XSTV) -->
     <div id="secao-apps">
+    <!-- BARRA DE PESQUISA -->
+    <div class="search-wrap">
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="campoBuscaApps" placeholder="Buscar aplicativo..." autocomplete="off" oninput="filtrarApps(this.value)">
+        </div>
+    </div>
+
         <section class="hero">
             <div class="badge">XSTV • Apps & MODs</div>
             <h1>Aqui estão os melhores aplicativos<br><span>que estão funcionando atualmente.</span></h1>
@@ -346,6 +364,19 @@
         Seu navegador não suporta a execução de vídeo.
     </video>
 </div>
+
+<!-- Script de pesquisa (apenas filtro visual, não altera o sistema) -->
+<script>
+function filtrarApps(termo) {
+    termo = (termo || '').toLowerCase().trim();
+    document.querySelectorAll('#apps .app-card').forEach(function(card) {
+        var nome = card.querySelector('.app-name');
+        var desc = card.querySelector('.app-description');
+        var txt = ((nome ? nome.textContent : '') + ' ' + (desc ? desc.textContent : '')).toLowerCase();
+        card.style.display = txt.indexOf(termo) > -1 ? '' : 'none';
+    });
+}
+</script>
 
 <!-- Script Externo -->
 <script src="script.js"></script>
